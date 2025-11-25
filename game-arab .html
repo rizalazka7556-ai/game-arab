@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>Game Bahasa Arab</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        padding: 20px;
+    }
+    .question {
+        font-size: 28px;
+        margin-bottom: 20px;
+        color: #333;
+    }
+    .option {
+        display: block;
+        margin: 10px auto;
+        padding: 10px 20px;
+        font-size: 20px;
+        cursor: pointer;
+        border: 2px solid #666;
+        width: 250px;
+        border-radius: 10px;
+    }
+    .option:hover {
+        background: #e0e0e0;
+    }
+    #score {
+        margin-top: 20px;
+        font-size: 22px;
+    }
+</style>
+</head>
+<body>
+
+<h2>🎮 Game Tebak Kosa Kata Arab</h2>
+
+<div class="question" id="question">...</div>
+
+<div id="options"></div>
+
+<div id="score">Skor: 0</div>
+
+<script>
+const questions = [
+    { arab: "بَيْت", options: ["Rumah", "Buku", "Air"], correct: "Rumah" },
+    { arab: "مَاء", options: ["Kucing", "Air", "Baju"], correct: "Air" },
+    { arab: "قِطّ", options: ["Kucing", "Ayam", "Ikan"], correct: "Kucing" },
+    { arab: "كِتَاب", options: ["Buku", "Meja", "Mobil"], correct: "Buku" },
+    { arab: "سَيَّارَة", options: ["Mobil", "Lampu", "Topi"], correct: "Mobil" },
+    { arab: "بَقَرَة", options: ["Sapi", "Kambing", "Kuda"], correct: "Sapi" },
+];
+
+let score = 0;
+
+function loadQuestion() {
+    const q = questions[Math.floor(Math.random() * questions.length)];
+
+    document.getElementById("question").innerText = q.arab;
+
+    const optionsDiv = document.getElementById("options");
+    optionsDiv.innerHTML = "";
+
+    q.options.forEach(opt => {
+        const btn = document.createElement("button");
+        btn.className = "option";
+        btn.innerText = opt;
+        btn.onclick = () => {
+            if (opt === q.correct) {
+                score++;
+                alert("Benar!");
+            } else {
+                alert("Salah!");
+            }
+            document.getElementById("score").innerText = "Skor: " + score;
+            loadQuestion();
+        };
+        optionsDiv.appendChild(btn);
+    });
+}
+
+loadQuestion();
+</script>
+
+</body>
+</html>
